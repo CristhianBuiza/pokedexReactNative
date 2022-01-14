@@ -33,7 +33,7 @@ const PokemonList = () => {
       const api = new PokemonClient();
       await api
         .getPokemonById(counter)
-        .then(pokemon => {
+        .then(pokemon => {          
           const currentPokemonStats: Stats = {
             hp: pokemon.stats[0].base_stat,
             attack: pokemon.stats[1].base_stat,
@@ -41,6 +41,7 @@ const PokemonList = () => {
             specialAttack: pokemon.stats[3].base_stat,
             specialDefense: pokemon.stats[4].base_stat,
             speed: pokemon.stats[5].base_stat,
+            
           };
           const newPokemon: Pokemon = {
             id: pokemon.id,
