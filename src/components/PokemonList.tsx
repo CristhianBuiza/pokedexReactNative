@@ -1,5 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
+
 import {
   StyleSheet,
   View,
@@ -11,9 +12,12 @@ import {
   SafeAreaView,
   StatusBar,
 } from 'react-native';
+
 import {PokemonClient} from 'pokenode-ts';
 import {useAppDispatch, useAppSelector} from '../app/hooks';
 import {setPokemon} from '../features/pokemons/pokemonSlice';
+import { Icon } from 'react-native-elements';
+
 import {
   increment,
   decrement,
@@ -22,11 +26,16 @@ import {
 } from '../features/counter/counter-slice';
 import Pokemon, {Stats} from '../models/Pokemon';
 import {Colors} from '../colors';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const PokemonList = () => {
+  const toastRef =useRef();
   const dispatch = useAppDispatch();
   const currentPokemon = useAppSelector(state => state.pokemon);
   const counter = useAppSelector(state => state.counter.value);
+  const {isFavorite, setIsFavorite}=useState(false);
+     
+  
 
   useEffect(() => {
     const fetchPokemon = async () => {
@@ -131,6 +140,11 @@ const PokemonList = () => {
     );
   };
 
+  
+  const removeFavorite =()=>{
+    console.log("No agregar")
+  }
+
   return (
     <View style={[styles.container, {backgroundColor: currentPokemon.color}]}>
       <StatusBar barStyle={'light-content'} />
@@ -139,20 +153,28 @@ const PokemonList = () => {
         source={require('../images/Pokeball.png')}
       />
       <View style={styles.whiteSheet} />
+      
       <SafeAreaView>
+        <View style={styles.viewFavorite} >
+          
+          <Icon type="material-community"
+          name={isFavorite ? "heart":"heart-outline"}
+          
+          color= "red"
+          size={35}
+          underlayColor="tranparent"
+          />
+          
+          
+        </View>
         {/* name and number */}
         <View style={styles.row}>
           <Text style={styles.pokemonName}>
             {currentPokemon.name.charAt(0).toUpperCase() +
               currentPokemon.name.slice(1)}
+              {" #"+currentPokemon.id}
           </Text>
-          <Text
-            style={[
-              styles.pokemonName,
-              {textAlign: 'right', marginRight: 20, fontSize: 25},
-            ]}>
-            #{currentPokemon.id}
-          </Text>
+        
         </View>
         {/* Image and buttons */}
         <View style={[styles.row, {height: 250}]}>
@@ -334,6 +356,7 @@ const PokemonList = () => {
           </View>
         </View>
       </SafeAreaView>
+
     </View>
   );
 };
@@ -341,6 +364,7 @@ const PokemonList = () => {
 export default PokemonList;
 
 const styles = StyleSheet.create({
+  
   container: {
     height: '100%',
     width: '100%',
@@ -376,8 +400,9 @@ const styles = StyleSheet.create({
     color: Colors.black,
   },
   row: {
-    flexDirection: 'row',
+    flexDirection: 'row', 
     justifyContent: 'space-between',
+
     alignItems: 'center',
   },
   pokemonTypeContainer: {
@@ -394,5 +419,14 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     width: '95%',
     height: '60%',
+  },
+  viewFavorite:{
+    position:"absolute",
+    top:0,
+    right:0,
+    backgroundColor:"#fff",
+    borderBottomLeftRadius:90,
+    padding:5,
+    paddingLeft:15,        
   },
 });
