@@ -8,7 +8,7 @@ export default function HomeScreen() {
     return (
         <Provider store={store}>
             <View>
-                <PokemonList />
+                <PokemonList  />
             </View>
         </Provider>
     )

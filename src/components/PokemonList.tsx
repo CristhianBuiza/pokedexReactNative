@@ -15,7 +15,7 @@ import {
 import {PokemonClient} from 'pokenode-ts';
 import {useAppDispatch, useAppSelector} from '../app/hooks';
 import {setPokemon} from '../features/pokemons/pokemonSlice';
-import { Icon } from 'react-native-elements/dist/icons/Icon';
+import { Icon } from 'react-native-elements';
 import {
   increment,
   decrement,
@@ -31,6 +31,7 @@ const PokemonList = () => {
   const currentPokemon = useAppSelector(state => state.pokemon);
   const counter = useAppSelector(state => state.counter.value);
   const {isFavorite, setIsFavorite}=useState(false);
+
   
 
   useEffect(() => {
@@ -135,8 +136,10 @@ const PokemonList = () => {
       />
     );
   };
-  const addFavorite =()=>{
-    console.log("Agregar Fav")
+  const addFavorite = ()=>{
+    
+      console.log("Agregado ")
+    
   }
   const removeFavorite =()=>{
     console.log("No agregar")
@@ -156,9 +159,9 @@ const PokemonList = () => {
           <Icon type="material-community"
           name={isFavorite ? "heart":"heart-outline"}
           onPress = {isFavorite ? removeFavorite : addFavorite}
-          color={isFavorite ? "#fff" : "red"}
+          color= "red"
           size={35}
-          underlayColor="transparent"
+          underlayColor="tranparent"
           />
           
           
@@ -168,14 +171,9 @@ const PokemonList = () => {
           <Text style={styles.pokemonName}>
             {currentPokemon.name.charAt(0).toUpperCase() +
               currentPokemon.name.slice(1)}
+              {" #"+currentPokemon.id}
           </Text>
-          <Text
-            style={[
-              styles.pokemonName,
-              {textAlign: 'right', marginRight: 20, fontSize: 25},
-            ]}>
-            #{currentPokemon.id}
-          </Text>
+        
         </View>
         {/* Image and buttons */}
         <View style={[styles.row, {height: 250}]}>
@@ -400,8 +398,9 @@ const styles = StyleSheet.create({
     color: Colors.black,
   },
   row: {
-    flexDirection: 'row',
+    flexDirection: 'row', 
     justifyContent: 'space-between',
+
     alignItems: 'center',
   },
   pokemonTypeContainer: {

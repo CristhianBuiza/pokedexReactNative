@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
+    "@fortawesome/fontawesome-svg-core": "^1.2.36",
+    "@fortawesome/react-fontawesome": "^0.1.16",
     "@mdi/font": "^6.5.95",
     "@react-navigation/material-bottom-tabs": "^6.0.9",
     "@react-navigation/native": "^6.0.6",
