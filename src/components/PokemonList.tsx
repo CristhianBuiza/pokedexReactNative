@@ -1,5 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
+
 import {
   StyleSheet,
   View,
@@ -14,6 +15,7 @@ import {
 import {PokemonClient} from 'pokenode-ts';
 import {useAppDispatch, useAppSelector} from '../app/hooks';
 import {setPokemon} from '../features/pokemons/pokemonSlice';
+import { Icon } from 'react-native-elements/dist/icons/Icon';
 import {
   increment,
   decrement,
@@ -24,9 +26,12 @@ import Pokemon, {Stats} from '../models/Pokemon';
 import {Colors} from '../colors';
 
 const PokemonList = () => {
+  const toastRef =useRef();
   const dispatch = useAppDispatch();
   const currentPokemon = useAppSelector(state => state.pokemon);
   const counter = useAppSelector(state => state.counter.value);
+  const {isFavorite, setIsFavorite}=useState(false);
+  
 
   useEffect(() => {
     const fetchPokemon = async () => {
@@ -130,6 +135,12 @@ const PokemonList = () => {
       />
     );
   };
+  const addFavorite =()=>{
+    console.log("Agregar Fav")
+  }
+  const removeFavorite =()=>{
+    console.log("No agregar")
+  }
 
   return (
     <View style={[styles.container, {backgroundColor: currentPokemon.color}]}>
@@ -140,6 +151,18 @@ const PokemonList = () => {
       />
       <View style={styles.whiteSheet} />
       <SafeAreaView>
+        <View style={styles.viewFavorite} >
+          
+          <Icon type="material-community"
+          name={isFavorite ? "heart":"heart-outline"}
+          onPress = {isFavorite ? removeFavorite : addFavorite}
+          color={isFavorite ? "#fff" : "red"}
+          size={35}
+          underlayColor="transparent"
+          />
+          
+          
+        </View>
         {/* name and number */}
         <View style={styles.row}>
           <Text style={styles.pokemonName}>
@@ -341,6 +364,7 @@ const PokemonList = () => {
 export default PokemonList;
 
 const styles = StyleSheet.create({
+  
   container: {
     height: '100%',
     width: '100%',
@@ -394,5 +418,14 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     width: '95%',
     height: '60%',
+  },
+  viewFavorite:{
+    position:"absolute",
+    top:0,
+    right:0,
+    backgroundColor:"#fff",
+    borderBottomLeftRadius:90,
+    padding:5,
+    paddingLeft:15,        
   },
 });
