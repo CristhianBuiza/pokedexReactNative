@@ -12,10 +12,12 @@ import {
   SafeAreaView,
   StatusBar,
 } from 'react-native';
+
 import {PokemonClient} from 'pokenode-ts';
 import {useAppDispatch, useAppSelector} from '../app/hooks';
 import {setPokemon} from '../features/pokemons/pokemonSlice';
 import { Icon } from 'react-native-elements';
+
 import {
   increment,
   decrement,
@@ -24,6 +26,7 @@ import {
 } from '../features/counter/counter-slice';
 import Pokemon, {Stats} from '../models/Pokemon';
 import {Colors} from '../colors';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const PokemonList = () => {
   const toastRef =useRef();
@@ -31,7 +34,7 @@ const PokemonList = () => {
   const currentPokemon = useAppSelector(state => state.pokemon);
   const counter = useAppSelector(state => state.counter.value);
   const {isFavorite, setIsFavorite}=useState(false);
-
+     
   
 
   useEffect(() => {
@@ -136,11 +139,8 @@ const PokemonList = () => {
       />
     );
   };
-  const addFavorite = ()=>{
-    
-      console.log("Agregado ")
-    
-  }
+
+  
   const removeFavorite =()=>{
     console.log("No agregar")
   }
@@ -153,12 +153,13 @@ const PokemonList = () => {
         source={require('../images/Pokeball.png')}
       />
       <View style={styles.whiteSheet} />
+      
       <SafeAreaView>
         <View style={styles.viewFavorite} >
           
           <Icon type="material-community"
           name={isFavorite ? "heart":"heart-outline"}
-          onPress = {isFavorite ? removeFavorite : addFavorite}
+          
           color= "red"
           size={35}
           underlayColor="tranparent"
@@ -355,6 +356,7 @@ const PokemonList = () => {
           </View>
         </View>
       </SafeAreaView>
+
     </View>
   );
 };
